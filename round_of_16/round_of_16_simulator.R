@@ -45,8 +45,9 @@ draw_one = function(valid_draws, runner_up) {
     winner = sample(possible_teams, 1)
   }
   # Remove winner from all possible lists
-  valid_draws[valid_draws == winner] = NA  
-  
+  if (!is.na(winner)) {
+    valid_draws[valid_draws == winner] = NA  
+  }
   # Return the winner and the updated data frame of possible teams
   return(list(winner = winner, valid_draws = valid_draws))
 }
@@ -55,8 +56,8 @@ draw_one = function(valid_draws, runner_up) {
 draw_one_round = function(valid_draws) {
   # Createa matrix of 0's to update.
   mat = matrix(rep(0, 64), nrow = 8)
-  rownames(mat) = winners$team_name
-  colnames(mat) = runners_up$team_name
+  rownames(mat) = runners_up$team_name
+  colnames(mat) = winners$team_name
   # Sample order of runner up teams
   draw_seq = sample(1:8, 8)
   #winner_list = c()
@@ -96,11 +97,10 @@ draw_one_round = function(valid_draws) {
 #     } # repeat
     # No winner was found so put -1 in to show it was a failed attempt
     if (is.na(winner)) {
-      mat[rownames(mat) == winner ,colnames(mat) == runner_up] = -1
-      return(mat)
+      return(-1)
     }
     else {
-      mat[rownames(mat) == winner ,colnames(mat) == runner_up] = 1
+      mat[rownames(mat) == runner_up ,colnames(mat) == winner] = 1
     }
   } # for
   return(mat)
@@ -110,8 +110,8 @@ draw_one_round = function(valid_draws) {
 draw_n_simulations = function(n) {
   # Createa matrix of 0's to update.
   mat = matrix(rep(0, 64), nrow = 8)
-  rownames(mat) = winners$team_name
-  colnames(mat) = runners_up$team_name
+  rownames(mat) = runners_up$team_name
+  colnames(mat) = winners$team_name
   valid_draws = create_valid_draws(runners_up, winners)
   `%dopar%` = foreach::`%dopar%`
   # Set up parallel running
@@ -124,14 +124,12 @@ draw_n_simulations = function(n) {
                                                                      'winners', 'runners_up')) %dopar% {
     `%>%` = dplyr::`%>%`
     `%!in%` = function(x, y) !(x%in%y)
-    success = TRUE
-    while (success) {
+    success = FALSE
+    while (!success) {
       mat_temp = draw_one_round(valid_draws)
-      if (any(mat_temp == -1)) {
+      # If we have a draw
+      if (sum(mat_temp == -1) == 0) {
         success = TRUE
-      }
-      else {
-        success = FALSE
       }
     }
     return(mat_temp)
@@ -143,4 +141,4 @@ draw_n_simulations = function(n) {
 }
 
 results = draw_n_simulations(100000)
-prop_results = apply(results, 2, function(x) round(100*(x/sum(x)),3))
+prop_results = apply(results, 2, function(x) round(100*(x/sum(x)),0))
