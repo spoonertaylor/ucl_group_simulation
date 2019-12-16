@@ -2,7 +2,7 @@
 `%!in%` = function(x, y) !(x%in%y)
 `%>%` = dplyr::`%>%`
 # * GLOBAL ----
-SEASON = 2019
+SEASON = 2020
 # * Team Data ----
 teams = read.csv(paste0('round_of_16/data/round_of_16_', SEASON, '.csv'),
                  stringsAsFactors = FALSE)
@@ -141,4 +141,4 @@ draw_n_simulations = function(n) {
 }
 
 results = draw_n_simulations(100000)
-prop_results = apply(results, 2, function(x) round(100*(x/sum(x)),0))
+prop_results = apply(results, 2, function(x) round(100*(x/sum(x)),2))
