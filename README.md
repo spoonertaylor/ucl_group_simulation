@@ -9,9 +9,9 @@ Currently in this repo there is only the draw simulations for the Round of 16 (A
 ### Output
 The output of the script is an 8x8 matrix where the row names are the group runner's up listed in group order and the column names are the group winners. The elements of the matrix is the probability that those two teams draw each other. In the current form the output is not saved anywhere (to-do item to output it in a clean format) so I have been putting the results in an excel file that is saved in the `round_of_16/results` file. The final outputs can also be seen below:
 
-![2019-2020 Results](https://github.com/spoonertaylor/ucl_group_simulation/round_of_16/results/round_of_16_results_2020)
+![2019-2020 Results](https://github.com/spoonertaylor/ucl_group_simulation/blob/master/round_of_16/results/round_of_16_results_2020.png)
 
-![2018-2019 Results](https://github.com/spoonertaylor/ucl_group_simulation/round_of_16/results/round_of_16_results_2020)
+![2018-2019 Results](https://github.com/spoonertaylor/ucl_group_simulation/blob/master/round_of_16/results/round_of_16_results_2019.png)
 
 ### Conclusion
 The to-do list for this repo is as follows:
