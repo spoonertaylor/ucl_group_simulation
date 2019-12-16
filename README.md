@@ -20,4 +20,4 @@ The to-do list for this repo is as follows:
 3. Add creation of groups simulations.
 
 And finally:
-![Go Blues](https://www.youtube.com/watch?v=lBP7QQYN1IU)
+[![Go Blues!](https://img.youtube.com/vi/lBP7QQYN1IU/0.jpg)](https://www.youtube.com/watch?v=lBP7QQYN1IU)
